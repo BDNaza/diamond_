@@ -1,0 +1,6 @@
+module Pods_diamond__diamond_Tests {
+  umbrella header "Pods-diamond_-diamond_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

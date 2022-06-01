@@ -1,0 +1,31 @@
+{
+  "translation":{
+      "Home":"ホームページ",
+
+      "Price":"価格",
+      "Price-update-date":"2022年2月11日",
+      "Shape":"シェイプ’",
+      "Color":"カラー",
+      "Clarity":"クラリティ",
+      "Carat":"カラット",
+      "Calculate":"計算する",
+      "Diamond_price":"ダイヤモンド価格",
+      "Diamond_price/carat":"1カラットあたり数百個のダイヤモンド",
+    
+      "Calculator":"計算機",
+      "Discount":"Cut 割引",
+      "PurchasePrice":"購入金額",
+
+      "Settings":"設定",
+      "Price-update":"価格は更新されました",
+      "Currency":"通貨",
+      "Language":"言語",
+      "Share_App":"共有アプリ",
+      "Contact_Author":"連絡先作成者",
+      "Reset":"リセット",
+      "Terms_and_conditions":"規約と条件",
+      "TNC_description":"ダイヤモンド計算機は、ユーザーが利用可能な基準（色、さび、透明度、形状など）に基づいてダイヤモンドの推定価格範囲を決定するのを支援するために作成されています。表示されている価格は、更新されたダイヤモンドの価格に基づく見積もりです。このアプリケーションの使用によって生じたいかなる損失についても、当社は責任を負いません。このアプリをご利用いただきありがとうございます。 \n\n詳細については、CraneIncをご覧ください。"
+
+
+  }
+}
