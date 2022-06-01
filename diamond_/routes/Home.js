@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingVertical: 15,
         width: '20%',
-       fontFamily:'Open Sans Light',
+    //    fontFamily:'Open Sans Light',
         // fontWeight:'600'
     },
     scrollAreaTitle2: {
