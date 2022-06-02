@@ -310,7 +310,9 @@ export default function CalculatorScreen({ navigation }) {
                   height: 90,
                   width: '95%'
                 }}
-
+                labelStyle={{
+                  textAlign: 'center',
+                }}
               />
 
 
@@ -324,7 +326,8 @@ export default function CalculatorScreen({ navigation }) {
                   padding: 10,
                   backgroundColor: '#fff',
                   borderColor: '#fff',
-                  borderRadius: 5
+                  borderRadius: 5,
+                  textAlign:'center'
                 }}
                 onChangeText={onChangeText}
                 value={text}
@@ -334,7 +337,7 @@ export default function CalculatorScreen({ navigation }) {
                 returnKeyType={'done'}
                 keyboardAppearance={'default'}
                 autoCorrect={true}
-
+               
 
               />
 
@@ -368,6 +371,9 @@ export default function CalculatorScreen({ navigation }) {
                   height: 90,
                   width: '95%',
                 }}
+                labelStyle={{
+                  textAlign: 'center',
+                }}
               />
 
 
@@ -394,6 +400,9 @@ export default function CalculatorScreen({ navigation }) {
                   borderColor: '#D3D3D3',
                   backgroundColor: '#D3D3D3',
                   width: '95%',
+                }}
+                labelStyle={{
+                  textAlign: 'center',
                 }}
               />
 
@@ -427,6 +436,9 @@ export default function CalculatorScreen({ navigation }) {
                 backgroundColor: '#D3D3D3',
                 height: 150,
               }}
+              labelStyle={{
+                textAlign: 'center',
+              }}
             />
             <Text style={{ color: '#fff', textAlign: 'left', marginBottom: -10,  fontWeight: '600' }}>{t("PurchasePrice")}</Text>
             <DropDownPicker //purchase price
@@ -455,7 +467,7 @@ export default function CalculatorScreen({ navigation }) {
                 height: 90,
               }}
               labelStyle={{
-                // textAlign: 'center',
+                textAlign: 'center',
               }}
             />
 
