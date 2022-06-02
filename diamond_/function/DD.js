@@ -59,7 +59,7 @@ export default class Example extends React.Component {
     // console.log("Filtered Data Price: ", filtered[0].price);
     // })
 
-    { console.log('Hello') }
+   
     { console.log('Test Shape', this.state.selectedShapeIndex) }
     { console.log('Test Color', this.state.selectedColorIndex) }
     { console.log('Test Clarity', this.state.selectedClarityIndex) }

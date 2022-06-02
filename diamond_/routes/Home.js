@@ -159,11 +159,10 @@ export default function HomeScreen({ navigation }) {
                         {t("Diamond_price/carat")}
                     </Text>
                     <View style={styles.priceListMain}>
-
                         <View
                             style={{
                                 width: "40%",
-                                height: "100%",
+                                height: 50,
                                 flexDirection: "row",
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -174,7 +173,7 @@ export default function HomeScreen({ navigation }) {
                             <Image source={require('../assets/currency/usa.jpg')}></Image>
                             <Text style={styles.scrollAreaTitle2}>{"USD"}</Text>
                         </View>
-                        <View style={{ width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{ width: '60%', height: 50,justifyContent: 'center', alignItems: 'center', }}>
                             <ShowPrice
                                 selectedColor={selectedColor}
                             />
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
         alignContent: 'flex-start',
         width: '90%',
         height: 280,
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 1,
         backgroundColor: '#fff',
         borderColor: '#fff',
@@ -339,7 +338,7 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: 20,
         backgroundColor: 'blue',
-        borderRadius: 10,
+        borderRadius: 5,
         justifyContent: 'center',
     },
     buttonText: {
@@ -359,9 +358,9 @@ const styles = StyleSheet.create({
     priceListMain: {
         flexDirection: 'row',
         width: '90%',
-        height: 70,
+        height: 50,
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 5,
         marginBottom: 10,
     },
     pickerItems: {

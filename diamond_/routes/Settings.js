@@ -59,7 +59,7 @@ export default function SettingsScreen({ navigation }) {
                                 }}
                                 containerStyle={{
                                     // backgroundColor: '#000',
-                                    borderRadius: 10,
+                                    borderRadius: 5,
                                 }}
                                 textStyle={{
                                     color: '#000'
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         // marginLeft: 35,
         marginHorizontal: 35,
         backgroundColor: 'blue',
-        borderRadius: 10,
+        borderRadius: 5,
         justifyContent: 'center',
     },
     buttonText: {
