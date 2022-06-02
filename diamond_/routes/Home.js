@@ -1,11 +1,10 @@
 import * as react from 'react';
 import React, { useState, useEffect, Component, Dimensions } from 'react';
-import { Text, View, StyleSheet, Button, ImageBackground, Image,SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, Image, SafeAreaView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useTranslation } from 'react-i18next';
 import ShowPrice from '../function/filter';
 import DynamicallySelectedPicker from '../function/DD'
-// import DynamicallySelectedPicker from 'react-native-dynamically-selected-picker';
 
 
 const bgimg = { uri: 'https://www.crane-a.co.jp/en/wp-content/themes/lotus_tcd039a/img/diamondapp/mobile/main-bg.jpg' };
@@ -196,10 +195,6 @@ export default function HomeScreen({ navigation }) {
     );
 
 }
-
-
-
-
 const styles = StyleSheet.create({
     main: {
         flex: 1,
@@ -213,11 +208,9 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     head: {
-        // flex: 0.12,
         width: '100%',
         height: '8%',
         borderBottomColor: '#fff',
-        // paddingBottom: 10,
         borderBottomWidth: 2,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -228,10 +221,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         paddingLeft: 5,
         fontSize: 30,
-        // position: 'absolute',
         width: '100%',
-        // height: 40,
-        // backgroundColor: 'red',
 
     },
     body: {
@@ -261,23 +251,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'flex-start',
         flexDirection: 'column'
-        // ...Platform.select({
-        //     ios: {
-        //         // display: 'red'
-        //     },
-        //     android: {
-        //         display: 'none'
-        //     },
-        //     default: {
-        //         // other platforms, web for example
-        //         // backgroundColor: 'blue'
-        //     }
-        // })
+      
     },
-    // pickerSingle: {
-    //     height: '50%',
-    //     width: '20%',
-    // },
     pickerSingleShape: {
         height: '100%',
         width: '17%',
@@ -298,7 +273,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     pickerCarat: {
-        // marginVertical: 30,
         width: 90,
         borderTopWidth: 2,
         borderTopColor: '#005fe9',
@@ -312,9 +286,7 @@ const styles = StyleSheet.create({
     },
 
     pickerColor: {
-        // marginVertical: 30,
         width: 40,
-        // width: 90,
         borderTopWidth: 2,
         borderTopColor: '#005fe9',
         borderBottomWidth: 2,
@@ -326,9 +298,7 @@ const styles = StyleSheet.create({
     },
 
     pickerClarity: {
-        // marginVertical: 30,
         width: 70,
-        // width: 90,
         borderTopWidth: 2,
         borderTopColor: '#005fe9',
         borderBottomWidth: 2,
@@ -338,9 +308,7 @@ const styles = StyleSheet.create({
     },
 
     pickerShape: {
-        // marginVertical: 30,
         width: 65,
-        // width: 90,
         borderTopWidth: 2,
         borderTopColor: '#005fe9',
         borderBottomWidth: 2,
@@ -356,7 +324,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingVertical: 15,
         width: '20%',
-    //    fontFamily:'Open Sans Light',
+        // fontFamily:'Open Sans Light',
         // fontWeight:'600'
     },
     scrollAreaTitle2: {
@@ -384,9 +352,9 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 10,
         marginBottom: 10,
-       // fontFamily:'opensans',
-        fontWeight:'600',
-        fontSize:15
+        // fontFamily:'opensans',
+        fontWeight: '600',
+        fontSize: 15
     },
     priceListMain: {
         flexDirection: 'row',
@@ -415,7 +383,6 @@ const styles = StyleSheet.create({
     pickertitle: {
         display: 'flex',
         flexDirection: 'row',
-        // backgroundColor: 'red',
         justifyContent: 'space-evenly',
     }
 });
