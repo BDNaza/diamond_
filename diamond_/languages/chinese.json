@@ -1,33 +1,28 @@
 {
-    "translation":{
-        "Home":"家",
-  
-        "Price":"价钱",
-        "Price-update-date":"2022 年 2 月 11 日",
-        "Shape":"形状",
-        "Color":"颜色",
-        "Clarity":"明晰",
-        "Carat":"克拉",
-        "Calculate":"计算",
-        "Diamond_price":"钻石价格",
-        "Diamond_price/carat":"钻石价格/克拉",
-  
-        "Calculator":"计算器",
-        "Discount":"Cut 折扣",
-        "PurchasePrice":"购买价格",
-        
-  
-        "Settings":"设置",
-        "Price-update":"价格更新",
-        "Currency":"货币",
-        "Language":"语言",
-        "Share_App":"分享申请",
-        "Contact_Author":"联系作者",
-        "Reset":"重置",
-        "Terms_and_conditions":"条款和条件",
-        "TNC_description":"创建钻石计算器是为了帮助用户根据可用标准（颜色、锈蚀、透明度、形状等）确定钻石的估计价格范围。显示的价格是根据更新的钻石价格估算的。对于因使用此应用程序而造成的任何损失，我们概不负责。感谢您使用这个应用程序。 \n\n 更多信息，请访问",
-        "Crane_inc":" Crane Inc."
-
+    "translation": {
+        "Home": "首页",
+        "Price": "价格",
+        "Price-update-date": "2022 年 2 月 11 日",
+        "Shape": "形状",
+        "Color": "色泽",
+        "Clarity": "净度",
+        "Carat": "克拉",
+        "Calculate": "计算",
+        "Diamond_price": "钻石价格",
+        "Diamond_price/carat": "钻石价格/克拉",
+        "Calculator": "计算器",
+        "Discount": "折扣率",
+        "PurchasePrice": "购买价格",
+        "Settings": "设置",
+        "Price-update": "价格更新",
+        "Currency": "货币",
+        "Language": "语言",
+        "Share_App": "分享",
+        "Contact_Author": "联络我们",
+        "Reset": "重置",
+        "Terms_and_conditions": "服务条款",
+        "TNC_description": "本钻石计算器的主要目的是为了让用户根据各种鉴定标准（色泽、净度、克拉、形状等）来确认钻石的估计价格范围。所显示的价格是根据最新的钻石价格所估算。对于因使用此应用程序所造成的任何损害均由用户承担。谢谢使用此应用程序。 \n\n 更多详情，请联络",
+        "Crane_inc": " Crane Inc.",
+        "close": "关闭"
     }
-  }
-  
+}

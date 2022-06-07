@@ -109,17 +109,17 @@ export default function SettingsScreen({ navigation }) {
                                             <Text style={styles.modalTextTitle}>
                                                 {t("Terms_and_conditions")}
                                             </Text>
-                                            <Text style={{ marginTop: '10%', flexWrap: 'wrap', display: "flex", }}>
+                                            {/* <Text style={{ marginTop: '10%', flexWrap: 'wrap', display: "flex", }}>
                                                 {t("TNC_description")}
                                                 <Text onPress={() => {
                                                     Linking.openURL('https://www.crane-a.co.jp/')
                                                 }}>{t("Crane_inc")}</Text>
-                                            </Text>
+                                            </Text> */}
                                             <Pressable
                                                 style={[styles.buttonModalClose]}
                                                 onPress={() => setModalVisible(!modalVisible)}
                                             >
-                                                <Text style={styles.Textmodalclose}>Close</Text>
+                                                <Text style={styles.Textmodalclose}>{t("close")}</Text>
 
                                             </Pressable>
                                         </View>
