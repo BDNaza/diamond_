@@ -316,7 +316,7 @@ export default function CalculatorScreen({ navigation }) {
               />
 
 
-              <Text style={{ color: '#fff', marginBottom: -10,  fontWeight: '600', fontSize: 15 }}>{t("Carat")}</Text>
+              <Text style={{ color: '#fff', marginBottom: -10,  fontWeight: '600', fontSize: 15 ,}}>{t("Carat")}</Text>
               <TextInput //Carat
                 style={{
                   height: 50,
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scrollArea: {
-    height: '35%',
+    height: 200,
     flexDirection: 'row',
     justifyContent: 'center',
     width: '90%',

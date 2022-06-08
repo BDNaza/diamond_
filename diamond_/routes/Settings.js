@@ -33,9 +33,12 @@ export default function SettingsScreen({ navigation }) {
                     <Text style={styles.headTitle}>{t("Settings")}</Text>
                 </View>
                 <View style={styles.body}>
-                    <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, }}>
+                    <View style={{ width: '100%', height: 80, borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, flexDirection:'row',justifyContent: 'space-between', alignItems: 'center'}}>
                         <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Price-update")}</Text>
-                        <View >
+                        <View style={{paddingRight: 20}}>
+                            <Text style={{color: 'white'}}>
+                            {t("Price-update-date")}
+                            </Text>
                         </View>
                     </View>
 
@@ -109,12 +112,12 @@ export default function SettingsScreen({ navigation }) {
                                             <Text style={styles.modalTextTitle}>
                                                 {t("Terms_and_conditions")}
                                             </Text>
-                                            {/* <Text style={{ marginTop: '10%', flexWrap: 'wrap', display: "flex", }}>
+                                            <Text style={{ marginTop: '10%', flexWrap: 'wrap', display: "flex", }}>
                                                 {t("TNC_description")}
-                                                <Text onPress={() => {
+                                                {/* <Text onPress={() => {
                                                     Linking.openURL('https://www.crane-a.co.jp/')
-                                                }}>{t("Crane_inc")}</Text>
-                                            </Text> */}
+                                                }}>{t("Crane_inc")}</Text> */}
+                                            </Text>
                                             <Pressable
                                                 style={[styles.buttonModalClose]}
                                                 onPress={() => setModalVisible(!modalVisible)}

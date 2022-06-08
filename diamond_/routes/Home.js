@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignContent: 'flex-start',
         width: '90%',
-        height: 280,
+        height: 300,
         borderRadius: 5,
         borderWidth: 1,
         backgroundColor: '#fff',
@@ -332,6 +332,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingVertical: 15,
         width: '40%',
+        
     },
     button: {
         width: '90%',
@@ -383,5 +384,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
+       
     }
 });
