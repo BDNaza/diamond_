@@ -217,17 +217,49 @@ export default function CalculatorScreen({ navigation }) {
 
   //discount
   const [discountOpen, setDiscountOpen] = useState(false);
-  const [discountvalue, setDiscountValue] = useState('30%');
+  const [discountvalue, setDiscountValue] = useState('20%');
   const [discountitems, setDiscountItems] = useState([
     {
-      label: '30%',
+      label: '20% - Excellent',
+      value: '20%',
+
+    },
+    {
+      label: '30% - Very Good',
       value: '30%',
+
+    },
+    {
+      label: '40% - Good',
+      value: '40%',
+    },
+    {
+      label: '50% - Fair',
+      value: '50%',
+    },
+    {
+      label: '60% - Poor',
+      value: '60%',
+    },
+  ]);
+
+  //discount
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  const [purchasevalue, setPurchaseValue] = useState('20%');
+  const [purchaseitems, setPurchaseItems] = useState([
+    {
+      label: '20%',
+      value: '20%',
+
+    },
+    {
+      label: '30%',
+      value: '30',
 
     },
     {
       label: '40%',
       value: '40%',
-
     },
     {
       label: '50%',
@@ -241,25 +273,9 @@ export default function CalculatorScreen({ navigation }) {
       label: '70%',
       value: '70%',
     },
-  ]);
-
-  //discount
-  const [purchaseOpen, setPurchaseOpen] = useState(false);
-  const [purchasevalue, setPurchaseValue] = useState('30% - Min price');
-  const [purchaseitems, setPurchaseItems] = useState([
     {
-      label: '30% - Min price',
-      value: '30% - Min price',
-
-    },
-    {
-      label: '50% - Mid price',
-      value: '50% - Mid price',
-
-    },
-    {
-      label: '90% - Max price',
-      value: '90% - Max price',
+      label: '80%',
+      value: '80%',
     }
   ]);
 
@@ -268,8 +284,8 @@ export default function CalculatorScreen({ navigation }) {
     setClarityValue('FL')
     setText(LOWER_LIMIT)
     setShapeValue('Round')
-    setDiscountValue('30%')
-    setPurchaseValue('30% - Min price')
+    setDiscountValue('20%')
+    setPurchaseValue('20%')
   }
   return (
     <SafeAreaView style={styles.main} >
@@ -443,7 +459,7 @@ export default function CalculatorScreen({ navigation }) {
             <Text style={{ color: '#fff', textAlign: 'left', marginBottom: -10,  fontWeight: '600' }}>{t("PurchasePrice")}</Text>
             <DropDownPicker //purchase price
               selectedValue={purchaseitems}
-              defaultValue={'30% - Min Price'}
+              defaultValue={'20%'}
               open={purchaseOpen}
               onOpen={onPurchaseOpen}
               value={purchasevalue}
