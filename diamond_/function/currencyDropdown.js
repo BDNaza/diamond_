@@ -6,17 +6,17 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 function CurrencyDropdown() {
     const [currencyOpen, setCurrencyOpen] = useState(false);
-    const [currencyvalue, setCurrencyValue] = useState('MYR');
+    const [currencyvalue, setCurrencyValue] = useState('USD');
     const [currencyitems, setCurrencyItems] = useState([
-        {
-            label: 'MYR',
-            value: 'MYR',
-            icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
-        },
         {
             label: 'USD',
             value: 'USD',
             icon: () => (<Image source={require('../assets/currency/usa.jpg')} />),
+        },
+        {
+            label: 'MYR',
+            value: 'MYR',
+            icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
         },
         {
             label: 'YEN',

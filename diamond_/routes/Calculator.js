@@ -1,13 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Text, View, StyleSheet, ImageBackground, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, TextInput, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
-
-
-
-import CurrencyDropdown from '../function/currencyDropdown';
-
-
+// import CurrencyDropdown from '../function/currencyDropdown';
 
 
 const bgimg = { uri: 'https://www.crane-a.co.jp/en/wp-content/themes/lotus_tcd039a/img/diamondapp/mobile/main-bg.jpg' };
@@ -65,7 +60,7 @@ export default function CalculatorScreen({ navigation }) {
     { label: 'M', value: '10' },
     { label: 'N', value: '11' }
   ]);
-
+  // console.log(colorvalue + 'color');
   //clarity
   const [clarityOpen, setClarityOpen] = useState(false);
   const [clarityvalue, setClarityValue] = useState('1');
@@ -82,7 +77,7 @@ export default function CalculatorScreen({ navigation }) {
     { label: 'I2', value: '10' },
     { label: 'I3', value: '11' },
   ]);
-
+  // console.log(clarityvalue + 'clarity');
   //carat
 
   const [number, onChangeNumber] = React.useState(null);
@@ -90,19 +85,6 @@ export default function CalculatorScreen({ navigation }) {
   const HIGHER_LIMIT = 10.99;
   const currentCaratValue = ["0", ".", "0", "0"];
   const [text, setText] = React.useState('');
-
-  // const onCheckLimit = (nvalue) => {
-  //   const parsedQty = Number.parseFloat(nvalue)
-  //   // const parsedQty
-  //   if (Number.isNaN(parsedQty)) {
-  //     setText(0) //setter for state
-  //   } else if (parsedQty > 10.99) {
-  //     setText((10.99).toString())
-  //   } else {
-  //     setText(parsedQty.toString())
-  //   }
-  //   console.log(text)
-  // }
 
 
   const onChangeText = (newText) => {
@@ -123,7 +105,7 @@ export default function CalculatorScreen({ navigation }) {
         
         else {
           setText(newText.toString());
-          console.log(newText + 'test1');
+          // console.log(newText + 'test1');
         }
       }
       else {
@@ -136,52 +118,6 @@ export default function CalculatorScreen({ navigation }) {
 
 
   }
-
-
-  // const onChangeText = (newText) => {
-  //   if (newText < LOWER_LIMIT && newText > HIGHER_LIMIT) {
-  //     return;
-  //   }
-  //   setText(newText);
-  //   console.log(newText+'new text')
-  //   //do shift left
-
-  // }
-
-  // const onChangeText = (newText) => {
-  //   if (newText < LOWER_LIMIT) {
-  //     newText = 0;
-
-  //   }
-  //   else if (newText >= 11) {
-  //     newText = 10.99;
-
-  //   }
-  //   else {
-  //     var pasrt = newText.toString().split('.');
-  //     t3ole = parts[0];
-  //     this.dec = Number("." + parts[1]).toFixed(2);
-  //     if (whole == 6 || whole == 7 || whole == 8 || whole == 9) {
-  //       whole = 0;
-  //       parts = this.whole + this.dec;
-  //     }
-
-  //   }
-  //   setText(newText);
-  //   console.log(newText + 'new text')
-  //   //do shift left
-
-  // }
-
-
-
-
-
-
-
-
-
-
 
   //shape
   const [shapeOpen, setShapeOpen] = useState(false);
@@ -261,6 +197,602 @@ export default function CalculatorScreen({ navigation }) {
     setDiscountValue('30%')
     setPurchaseValue('30% - Min price')
   }
+
+  //Currency Dropdown
+  const [currencyOpen, setCurrencyOpen] = useState(false);
+    const [currencyvalue, setCurrencyValue] = useState('USD');
+    const [currencyitems, setCurrencyItems] = useState([
+        {
+            label: 'USD',
+            value: 'USD',
+            icon: () => (<Image source={require('../assets/currency/usa.jpg')} />),
+        },
+        {
+            label: 'MYR',
+            value: 'MYR',
+            icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
+        },
+        {
+            label: 'YEN',
+            value: 'YEN',
+            icon: () => (<Image source={require('../assets/currency/jp.jpg')} />),
+        },
+        {
+            label: 'TWD',
+            value: 'TWD',
+            icon: () => (<Image source={require('../assets/currency/tw.jpg')} />),
+        },
+        {
+            label: 'SGD',
+            value: 'SGD',
+            icon: () => (<Image source={require('../assets/currency/sg.jpg')} />),
+        },
+    ]);
+
+
+  const [data, setData] = useState("")
+  // const [caratData, setCaratData] = useState("")
+  const calcPrice = () => {
+      // { console.log('Color Calc', colorvalue) }
+      // { console.log('Clarity Calc', clarityvalue) }
+      // { console.log('Carat Calc', text) }
+      // { console.log('Cut Disc Calc', discountvalue) }
+      // { console.log('Purchase Price Calc', purchasevalue) }
+      { console.log('Currency: ', currencyvalue) }
+      // const text = JSON.stringify(text);
+      // { console.log('Carat Calc', text) }
+
+      if (text >= 0.01 && text <= 0.03 ) {
+
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (test) =>
+            test.id_shape === "1" &&
+            test.id_color === colorvalue &&
+            test.id_clarity === clarityvalue &&
+            test.id_carat === "1"
+          );
+            const priceInHundreds = filtered[0].price * 100.00;
+            const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+            const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+            const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+            setData(diamondPrice.replace(/\"/g, ""));
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.04 && text <= 0.07) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "2"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+        
+      } else if (text >= 0.08 && text <= 0.14) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "3"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.15 && text <= 0.17) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "4"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.18 && text <= 0.22) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "5"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.23 && text <= 0.29) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "6"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.30 && text <= 0.39) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "7"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.40 && text <= 0.49) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "8"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.50 && text <= 0.69) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "9"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+        
+      } else if (text >= 0.70 && text <= 0.89) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "10"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 0.90 && text <= 0.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "11"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+        
+      } else if (text >= 1.00 && text <= 1.49) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "12"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+       
+      } else if (text >= 1.50 && text <= 1.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "13"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 2.00 && text <= 2.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "14"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 3.00 && text <= 3.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "15"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 4.00 && text <= 4.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "16"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 5.00 && text <= 5.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "17"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+      
+      } else if (text >= 10.00 && text <= 10.99) {
+      
+          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+            item.id_shape === "1" &&
+            item.id_color === colorvalue &&
+            item.id_clarity === clarityvalue &&
+            item.id_carat === "18"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount)
+          setData(diamondPrice.replace(/\"/g, ""));
+
+          })
+          .catch((error) => {
+            console.error(error);
+            });
+
+      } 
+      // else {
+      
+      // }
+      
+
+      };
+
+
+
   return (
     <SafeAreaView style={styles.main} >
       <ImageBackground source={bgimg} resizeMode="cover" style={styles.background}>
@@ -465,7 +997,12 @@ export default function CalculatorScreen({ navigation }) {
                   justifyContent: 'center',
                   borderRadius: 5,
                 }}>
+                  <TouchableOpacity
+                    style={{ alignItems: 'center', }}
+                    onPress={calcPrice}
+                  >
                   <Text style={{ color: '#fff', textAlign: 'center',  fontWeight: '600' }}>{t("Calculate")}</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={{
                   width: '49%',
@@ -503,7 +1040,27 @@ export default function CalculatorScreen({ navigation }) {
                 borderRightWidth: 1,
                 borderRightColor: '#808080'
               }}>
-                <CurrencyDropdown />
+                {/* <CurrencyDropdown /> */}
+                <DropDownPicker
+                  selectedValue={currencyitems}
+                  defaultValue={'MYR'}
+                  open={currencyOpen}
+                  // onOpen={onCurrencyOpen}
+                  value={currencyvalue}
+                  items={currencyitems}
+                  setOpen={setCurrencyOpen}
+                  setValue={setCurrencyValue}
+                  setItems={setCurrencyItems}
+                  // onValueChange={(value, index) => setValue(value)}
+                  style={{
+                      borderColor: '#fff',
+                      height: 50,
+                  }}
+                  dropDownContainerStyle={{
+                      borderColor: '#D3D3D3',
+                      height: 140,
+                  }}
+              />
               </View>
               <View style={{
                 width: '60%',
@@ -511,6 +1068,7 @@ export default function CalculatorScreen({ navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
+                <Text style={styles.scrollAreaTitle2}>{data}</Text>
               </View>
               <View></View>
             </View>
@@ -579,6 +1137,13 @@ const styles = StyleSheet.create({
     
     fontWeight: '600'
   },
+  scrollAreaTitle2: {
+    color: '#000',
+    textAlign: 'center',
+    fontSize: 15,
+    paddingVertical: 15,
+    width: '40%',
+},
   priceListMain: {
     flexDirection: 'row',
     width: '90%',
