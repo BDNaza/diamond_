@@ -118,13 +118,13 @@ export default function HomeScreen({ navigation }) {
                         </View>
                     </View>
                     <View style={styles.button}>
-                        {/* <TouchableOpacity
+                        <TouchableOpacity
                             style={{ alignItems: 'center', color: '#FFF' }}
-                           
-                        > */}
-                            <Text onPress={getPrice} style={styles.buttonText}>{t("Calculate")}
+                            onPress={getPrice}
+                        >
+                            <Text style={styles.buttonText}>{t("Calculate")}
                         </Text>
-                        {/* </TouchableOpacity> */}
+                        </TouchableOpacity>
                         {/* <button onClick={getPrice}></button> */}
                     </View>
                     <Text style={styles.resultNote}>
