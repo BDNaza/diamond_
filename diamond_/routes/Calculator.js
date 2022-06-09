@@ -213,8 +213,8 @@ export default function CalculatorScreen({ navigation }) {
             icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
         },
         {
-            label: 'YEN',
-            value: 'YEN',
+            label: 'JPY',
+            value: 'JPY',
             icon: () => (<Image source={require('../assets/currency/jp.jpg')} />),
         },
         {
@@ -1051,14 +1051,20 @@ export default function CalculatorScreen({ navigation }) {
                   setOpen={setCurrencyOpen}
                   setValue={setCurrencyValue}
                   setItems={setCurrencyItems}
+                  // zIndex={1000}
+                  // elevation={3}
+                  // zIndexInverse={1000}
                   // onValueChange={(value, index) => setValue(value)}
                   style={{
                       borderColor: '#fff',
                       height: 50,
+                      width: '100%',
+                      alignItems: 'center',
+                      marginVertical: 5,
                   }}
                   dropDownContainerStyle={{
                       borderColor: '#D3D3D3',
-                      height: 140,
+                      height: 150,
                   }}
               />
               </View>
