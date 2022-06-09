@@ -1,11 +1,8 @@
 import * as react from 'react';
 import React, { useState, useEffect, Component, Dimensions } from 'react';
-import { Text, View, StyleSheet, Button, ImageBackground, Image,SafeAreaView } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Text, View, StyleSheet, Button, ImageBackground, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import ShowPrice from '../function/filter';
 import DynamicallySelectedPicker from '../function/DD'
-// import DynamicallySelectedPicker from 'react-native-dynamically-selected-picker';
 
 
 const bgimg = { uri: 'https://www.crane-a.co.jp/en/wp-content/themes/lotus_tcd039a/img/diamondapp/mobile/main-bg.jpg' };
@@ -13,112 +10,74 @@ const bgimg = { uri: 'https://www.crane-a.co.jp/en/wp-content/themes/lotus_tcd03
 export default function HomeScreen({ navigation }) {
     const { t, i18n } = useTranslation();
 
-    // ***For Shape Picker*** //
+    const [stateSelectedPicker, setStateSelectedPicker] = useState({
+        selectedColorIndex: 1,
+        selectedClarityIndex: 1,
+        selectedCaratIndex: 1,
+        selectedShapeIndex: 1,
+    });
 
-    const [shapes, setShape] = React.useState([]);
-    const [selectedShape, setSelectedShape] = useState("");
+    function updateSelectedShape(index) {
+        setStateSelectedPicker((prev) => ({ ...prev, selectedShapeIndex: index }));
+    };
 
-    const onChangeShape = React.useCallback((shapes) => {
-        setShape(shapes);
-    }, []);
-    useEffect(() => {
-        fetch('https://www.jewel-cafe-staff.com/api/shape', {
-            method: "GET",
-            headers: {
+    async function updateSelectedColor(index) {
+        setStateSelectedPicker(prev => ({ ...prev, selectedColorIndex: index }));
+    };
+
+    async function updateSelectedClarity(index) {
+        setStateSelectedPicker(prev => ({ ...prev, selectedClarityIndex: index }));
+    };
+
+    async function updateSelectedCarat(index) {
+        setStateSelectedPicker(prev => ({ ...prev, selectedCaratIndex: index }));
+
+    };
+
+    const color = stateSelectedPicker.selectedColorIndex
+    const clarity = stateSelectedPicker.selectedClarityIndex
+    const carat = stateSelectedPicker.selectedCaratIndex
+    
+    const getPrice = () => {
+
+        { console.log('zzzzz Home', color) }
+        { console.log('Test Clarity Home', clarity) }
+        { console.log('Test Carat Home', carat) }
+
+        fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+                method: "GET",
+                headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
-        })
+                }
+            })
             .then(response => response.json())
             .then(responseJson => {
-                onChangeShape(responseJson.data)
-                // AsyncStorage.setItem('id_espace',espaces[0].id_espace);
-                // setSelectedValue();
+                const filtered = responseJson.data.filter(
+                    (item) =>
+                    item.id_shape === "1" &&
+                    item.id_color === JSON.stringify(color) &&
+                    item.id_clarity === JSON.stringify(clarity) &&
+                    item.id_carat === JSON.stringify(carat)
+                );
+            const diamondPrice = JSON.stringify(filtered[0].price)
+                setData(diamondPrice.replace(/\"/g, ""));
+                console.log("Filtered Data Price: ", data);
             })
             .catch((error) => {
                 console.error(error);
-            });
-    }, [onChangeShape]);
+                });
 
+        };
 
-    // ***For Color Picker*** //
-    const [colors, setColors] = React.useState([]);
-    const [selectedColor, setSelectedColor] = useState("");
-    const onChangeColors = React.useCallback((colors) => {
-        setColors(colors);
-    }, []);
+        const [data, setData] = useState("")
+        
+        // useEffect(() => {
+        
+        //    getPrice();
 
-
-    useEffect(() => {
-        fetch("https://www.jewel-cafe-staff.com/api/color", {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                onChangeColors(responseJson.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [onChangeColors]);
-
-    // ***For Clarity Picker*** //
-    const [clarities, setClarities] = React.useState([]);
-    const [selectedClarity, setSelectedClarity] = useState("");
-
-    const onChangeClarities = React.useCallback((clarities) => {
-        setClarities(clarities);
-    }, []);
-
-    useEffect(() => {
-        fetch('https://www.jewel-cafe-staff.com/api/clarity', {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(responseJson => {
-                onChangeClarities(responseJson.data)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [onChangeClarities]);
-
-    // ***For Carat Picker*** //
-    const [carats, setCarats] = React.useState([]);
-    const [selectedCarat, setSelectedCarat] = useState(null);
-
-
-    const onChangeCarats = React.useCallback((carats) => {
-        setCarats(carats);
-    }, []);
-    useEffect(() => {
-        fetch('https://www.jewel-cafe-staff.com/api/carat', {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-
-
-            .then(response => response.json())
-            .then(responseJson => {
-                onChangeCarats(responseJson.data)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [onChangeCarats]);
-
-
+        // }, [getPrice]);
+        // }
 
     return (
         <SafeAreaView style={styles.main} >
@@ -149,11 +108,24 @@ export default function HomeScreen({ navigation }) {
                             <Text style={styles.scrollAreaTitle}>{t("Carat")}</Text>
                         </View>
                         <View>
-                            <DynamicallySelectedPicker />
+                            <DynamicallySelectedPicker
+                                {...stateSelectedPicker}
+                                updateSelectedShape={updateSelectedShape}
+                                updateSelectedColor={updateSelectedColor}
+                                updateSelectedClarity={updateSelectedClarity}
+                                updateSelectedCarat={updateSelectedCarat}
+                            />
                         </View>
                     </View>
                     <View style={styles.button}>
-                        <Text style={styles.buttonText}>{t("Calculate")}</Text>
+                        {/* <TouchableOpacity
+                            style={{ alignItems: 'center', color: '#FFF' }}
+                           
+                        > */}
+                            <Text onPress={getPrice} style={styles.buttonText}>{t("Calculate")}
+                        </Text>
+                        {/* </TouchableOpacity> */}
+                        {/* <button onClick={getPrice}></button> */}
                     </View>
                     <Text style={styles.resultNote}>
                         {t("Diamond_price")} {"\n"}
@@ -176,10 +148,7 @@ export default function HomeScreen({ navigation }) {
                             <Text style={styles.scrollAreaTitle2}>{"USD"}</Text>
                         </View>
                         <View style={{ width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
-                            <ShowPrice
-                                selectedColor={selectedColor}
-                            />
-
+                        <Text style={styles.scrollAreaTitle2}>{data}</Text>
                         </View>
                         <View>
                         </View>
@@ -356,7 +325,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingVertical: 15,
         width: '20%',
-       fontFamily:'Open Sans Light',
+        fontFamily: 'Open Sans Light',
         // fontWeight:'600'
     },
     scrollAreaTitle2: {
@@ -365,6 +334,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingVertical: 15,
         width: '40%',
+    },
+    scrollAreaTitle3: {
+        color: '#000',
+        textAlign: 'center',
+        fontSize: 15,
+        // paddingVertical: 15,
+        // width: '80%',
     },
     button: {
         width: '90%',
@@ -384,9 +360,9 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 10,
         marginBottom: 10,
-       // fontFamily:'opensans',
-        fontWeight:'600',
-        fontSize:15
+        // fontFamily:'opensans',
+        fontWeight: '600',
+        fontSize: 15
     },
     priceListMain: {
         flexDirection: 'row',

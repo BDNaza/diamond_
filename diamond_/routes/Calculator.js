@@ -51,58 +51,36 @@ export default function CalculatorScreen({ navigation }) {
 
   //color
   const [colorOpen, setColorOpen] = useState(false);
-  const [colorvalue, setColorValue] = useState('E');
+  const [colorvalue, setColorValue] = useState('1');
   const [coloritems, setColorItems] = useState([
-    {
-      label: 'E',
-      value: 'E',
-
-    },
-    {
-      label: 'F',
-      value: 'F',
-
-    },
-    {
-      label: 'G',
-      value: 'G',
-    },
-    {
-      label: 'H',
-      value: 'H',
-    },
-    {
-      label: 'I',
-      value: 'I',
-    },
+    { label: 'D', value: '1' },
+    { label: 'E', value: '2' },
+    { label: 'F', value: '3' },
+    { label: 'G', value: '4' },
+    { label: 'H', value: '5' },
+    { label: 'I', value: '6' },
+    { label: 'J', value: '7' },
+    { label: 'K', value: '8' },
+    { label: 'L', value: '9' },
+    { label: 'M', value: '10' },
+    { label: 'N', value: '11' }
   ]);
 
   //clarity
   const [clarityOpen, setClarityOpen] = useState(false);
-  const [clarityvalue, setClarityValue] = useState('FL');
+  const [clarityvalue, setClarityValue] = useState('1');
   const [clarityitems, setClarityItems] = useState([
-    {
-      label: 'FL',
-      value: 'FL',
-
-    },
-    {
-      label: 'VVS',
-      value: 'VVS',
-
-    },
-    {
-      label: 'VS',
-      value: 'VS',
-    },
-    {
-      label: 'SI',
-      value: '2SI',
-    },
-    {
-      label: 'I',
-      value: 'I',
-    },
+    { label: 'IF', value: '1' },
+    { label: 'VVS1', value: '2' },
+    { label: 'VVS2', value: '3' },
+    { label: 'VS1', value: '4' },
+    { label: 'VS2', value: '5' },
+    { label: 'SI1', value: '6' },
+    { label: 'SI2', value: '7' },
+    { label: 'SI3', value: '8' },
+    { label: 'I1', value: '9' },
+    { label: 'I2', value: '10' },
+    { label: 'I3', value: '11' },
   ]);
 
   //carat
@@ -207,60 +185,72 @@ export default function CalculatorScreen({ navigation }) {
 
   //shape
   const [shapeOpen, setShapeOpen] = useState(false);
-  const [shapevalue, setShapeValue] = useState('Round');
+  const [shapevalue, setShapeValue] = useState('1');
   const [shapeitems, setShapeItems] = useState([
     {
       label: 'Round',
-      value: 'Round',
+      value: '1',
 
     },]);
 
-  //discount
+  //Cut Discount
   const [discountOpen, setDiscountOpen] = useState(false);
-  const [discountvalue, setDiscountValue] = useState('30%');
+  const [discountvalue, setDiscountValue] = useState('30');
   const [discountitems, setDiscountItems] = useState([
     {
+      label: '30% - Very Good',
+      value: '30',
+
+    },
+    {
+      label: '40% - Good',
+      value: '40',
+
+    },
+    {
+      label: '50% - Fair',
+      value: '50',
+    },
+    {
+      label: '60% - Poor',
+      value: '60',
+    },
+  ]);
+
+  //Purchase Price
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  const [purchasevalue, setPurchaseValue] = useState('20');
+  const [purchaseitems, setPurchaseItems] = useState([
+    {
+      label: '20%',
+      value: '20',
+
+    },
+    {
       label: '30%',
-      value: '30%',
+      value: '30',
 
     },
     {
       label: '40%',
-      value: '40%',
-
+      value: '40',
     },
     {
       label: '50%',
-      value: '50%',
+      value: '50',
     },
     {
       label: '60%',
-      value: '60%',
+      value: '60',
     },
     {
       label: '70%',
-      value: '70%',
-    },
-  ]);
-
-  //discount
-  const [purchaseOpen, setPurchaseOpen] = useState(false);
-  const [purchasevalue, setPurchaseValue] = useState('30% - Min price');
-  const [purchaseitems, setPurchaseItems] = useState([
-    {
-      label: '30% - Min price',
-      value: '30% - Min price',
-
+      value: '70',
     },
     {
-      label: '50% - Mid price',
-      value: '50% - Mid price',
-
+      label: '80%',
+      value: '80',
     },
-    {
-      label: '90% - Max price',
-      value: '90% - Max price',
-    }
   ]);
 
   const reset = () => {

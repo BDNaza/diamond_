@@ -1,33 +1,10 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, useState, useEffect } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import DynamicallySelectedPicker from 'react-native-dynamically-selected-picker';
 // import AsyncStorage from '@react-native-community/async-storage';
 
-
-
 export default class Example extends React.Component {
-
-  state = {
-    selectedColorIndex: 1,
-    selectedClarityIndex: 1,
-    selectedCaratIndex: 1,
-    selectedShapeIndex: 1,
-  };
-  updateSelectedShape(index) {
-
-    this.setState({ selectedShapeIndex: index });
-  }
-  updateSelectedColor(index) {
-    this.setState({ selectedColorIndex: index });
-  }
-  updateSelectedClarity(index) {
-    this.setState({ selectedClarityIndex: index });
-  }
-  updateSelectedCarat(index) {
-
-    this.setState({ selectedCaratIndex: index });
-  }
 
   constructor(props) {
     super(props);
@@ -36,7 +13,10 @@ export default class Example extends React.Component {
     };
     this.filterPrice = this.filterPrice.bind(this);
   }
+
+  
   filterPrice() {
+    // const [data, setData] = useState([]);
 
     // return fetch("https://www.jewel-cafe-staff.com/api/showPrice", {
     //   method: "GET",
@@ -59,11 +39,12 @@ export default class Example extends React.Component {
     // console.log("Filtered Data Price: ", filtered[0].price);
     // })
 
-    { console.log('Hello') }
-    { console.log('Test Shape', this.state.selectedShapeIndex) }
-    { console.log('Test Color', this.state.selectedColorIndex) }
-    { console.log('Test Clarity', this.state.selectedClarityIndex) }
-    { console.log('Test Carat', this.state.selectedCaratIndex) }
+    // { console.log('Hello') }
+    // sekarang sume ni kau dapat dr props
+    // { console.log('Test Shape', this.props.selectedShapeIndex) }
+    // { console.log('Test Color', this.props.selectedColorIndex) }
+    // { console.log('Test Clarity', this.props.selectedClarityIndex) }
+    // { console.log('Test Carat', this.props.selectedCaratIndex) }
   }
 
   render() {
@@ -79,7 +60,7 @@ export default class Example extends React.Component {
               },
             ]}
             onScroll={({ index, item }) => {
-              this.updateSelectedShape(index + 1);
+              this.props.updateSelectedShape(index + 1);
               // console.log(index + 1 + 'shape')
             }}
             height={230}
@@ -140,7 +121,7 @@ export default class Example extends React.Component {
               },
             ]}
             onScroll={({ index, item }) => {
-              this.updateSelectedColor(index + 1);
+              this.props.updateSelectedColor(index + 1);
 
               // console.log(index + 1, 'Color')
             }}
@@ -202,7 +183,7 @@ export default class Example extends React.Component {
               },
             ]}
             onScroll={({ index, item }) => {
-              this.updateSelectedClarity(index + 1);
+              this.props.updateSelectedClarity(index + 1);
               // console.log(index + 1 + 'Clarity')
             }}
             height={230}
@@ -237,7 +218,7 @@ export default class Example extends React.Component {
               { label: '10.00 - 10.99', value: '18' }
             ]}
             onScroll={({ index, item }) => {
-              this.updateSelectedCarat(index + 1);
+              this.props.updateSelectedCarat(index + 1);
               // console.log(index + 1 + 'Carat')
             }}
             height={230}

@@ -66,7 +66,7 @@ function tempUseEffect(selectedColorId) {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-
+          
           // const test = JSON.stringify(selectedValue.selectedValue);
 
           console.log("Selected Color: ", selectedColor.selectedColor);
