@@ -134,6 +134,11 @@ export default function CalculatorScreen({ navigation }) {
   const [discountvalue, setDiscountValue] = useState('30');
   const [discountitems, setDiscountItems] = useState([
     {
+      label: '20% - Excellent',
+      value: '20',
+
+    },
+    {
       label: '30% - Very Good',
       value: '30',
 
