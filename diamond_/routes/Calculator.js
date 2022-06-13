@@ -102,7 +102,7 @@ export default function CalculatorScreen({ navigation }) {
           myArray[0] = 0
           setText((myArray[0] + '.' + myArray[1]).toString())
         }
-        
+
         else {
           setText(newText.toString());
           // console.log(newText + 'test1');
@@ -195,46 +195,51 @@ export default function CalculatorScreen({ navigation }) {
   ]);
 
   const reset = () => {
-    setColorValue('E')
-    setClarityValue('FL')
+    setColorValue('1')
+    setClarityValue('1')
     setText(LOWER_LIMIT)
-    setShapeValue('Round')
-    setDiscountValue('30%')
-    setPurchaseValue('30% - Min price')
+    setShapeValue('1')
+    setDiscountValue('20')
+    setPurchaseValue('20')
     setPriceAfterCalc('')
     setData('')
   }
 
   //Currency Dropdown
   const [currencyOpen, setCurrencyOpen] = useState(false);
-    const [currencyvalue, setCurrencyValue] = useState('USD');
-    const [currencyitems, setCurrencyItems] = useState([
-        {
-            label: 'USD',
-            value: 'USD',
-            icon: () => (<Image source={require('../assets/currency/usa.jpg')} />),
-        },
-        {
-            label: 'MYR',
-            value: 'MYR',
-            icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
-        },
-        {
-            label: 'JPY',
-            value: 'JPY',
-            icon: () => (<Image source={require('../assets/currency/jp.jpg')} />),
-        },
-        {
-            label: 'TWD',
-            value: 'TWD',
-            icon: () => (<Image source={require('../assets/currency/tw.jpg')} />),
-        },
-        {
-            label: 'SGD',
-            value: 'SGD',
-            icon: () => (<Image source={require('../assets/currency/sg.jpg')} />),
-        },
-    ]);
+  const [currencyvalue, setCurrencyValue] = useState('USD');
+  const [currencyitems, setCurrencyItems] = useState([
+    {
+      label: 'USD',
+      value: 'USD',
+      icon: () => (<Image source={require('../assets/currency/usa.jpg')} />),
+    },
+    {
+      label: 'MYR',
+      value: 'MYR',
+      icon: () => (<Image source={require('../assets/currency/my.jpg')} />),
+    },
+    {
+      label: 'JPY',
+      value: 'JPY',
+      icon: () => (<Image source={require('../assets/currency/jp.jpg')} />),
+    },
+    {
+      label: 'TWD',
+      value: 'TWD',
+      icon: () => (<Image source={require('../assets/currency/tw.jpg')} />),
+    },
+    {
+      label: 'SGD',
+      value: 'SGD',
+      icon: () => (<Image source={require('../assets/currency/sg.jpg')} />),
+    },
+    {
+      label: 'HKD',
+      value: 'HKD',
+      icon: () => (<Image source={require('../assets/currency/hk.jpg')} />),
+    },
+  ]);
 
 
   const [data, setData] = useState("")
@@ -242,1804 +247,1804 @@ export default function CalculatorScreen({ navigation }) {
   const [priceAfterCalc, setPriceAfterCalc] = useState("")
   // const [caratData, setCaratData] = useState("")
   const calcPrice = () => {
-      // { console.log('Color Calc', colorvalue) }
-      // { console.log('Clarity Calc', clarityvalue) }
-      // { console.log('Carat Calc', text) }
-      // { console.log('Cut Disc Calc', discountvalue) }
-      // { console.log('Purchase Price Calc', purchasevalue) }
-      // { console.log('Currency: ', currencyvalue) }
-      // const text = JSON.stringify(text);
-      // { console.log('Carat Calc', text) }
+    // { console.log('Color Calc', colorvalue) }
+    // { console.log('Clarity Calc', clarityvalue) }
+    // { console.log('Carat Calc', text) }
+    // { console.log('Cut Disc Calc', discountvalue) }
+    // { console.log('Purchase Price Calc', purchasevalue) }
+    // { console.log('Currency: ', currencyvalue) }
+    // const text = JSON.stringify(text);
+    // { console.log('Carat Calc', text) }
 
-          if (text >= 0.01 && text <= 0.03 ) {
+    if (text >= 0.01 && text <= 0.03) {
 
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "1"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "1"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.04 && text <= 0.07) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.04 && text <= 0.07) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "2"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "2"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.08 && text <= 0.14) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-            
-          } else if (text >= 0.08 && text <= 0.14) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "3"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "3"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.15 && text <= 0.17) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.15 && text <= 0.17) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "4"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "4"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.18 && text <= 0.22) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.18 && text <= 0.22) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "5"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "5"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.23 && text <= 0.29) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.23 && text <= 0.29) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "6"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "6"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.30 && text <= 0.39) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.30 && text <= 0.39) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "7"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "7"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.40 && text <= 0.49) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.40 && text <= 0.49) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "8"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "8"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.50 && text <= 0.69) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.50 && text <= 0.69) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "9"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "9"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.70 && text <= 0.89) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-            
-          } else if (text >= 0.70 && text <= 0.89) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "10"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "10"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 0.90 && text <= 0.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 0.90 && text <= 0.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "11"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "11"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 1.00 && text <= 1.49) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-            
-          } else if (text >= 1.00 && text <= 1.49) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "12"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "12"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 1.50 && text <= 1.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 1.50 && text <= 1.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "13"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "13"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 2.00 && text <= 2.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 2.00 && text <= 2.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "14"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "14"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 3.00 && text <= 3.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 3.00 && text <= 3.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "15"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "15"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 4.00 && text <= 4.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 4.00 && text <= 4.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "16"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "16"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 5.00 && text <= 5.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 5.00 && text <= 5.99) {
-          
-            if (currencyvalue == "MYR"){
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.MYR);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "USD") {
-                setCurrencyPrice(1);
-            } else if (currencyvalue == "TWD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.TWD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "SGD") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.SGD);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            } else if (currencyvalue == "JPY") {
-              fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                    method: "GET",
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    setCurrencyPrice(responseJson.rates.JPY);
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    });
-            }
-      
-          fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-            method: "GET",
-            headers: {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            }
-          })
+          }
+        })
           .then(response => response.json())
           .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
           // console.log(responseJson.data);
           const filtered = responseJson.data.filter(
             (item) =>
-            item.id_shape === "1" &&
-            item.id_color === colorvalue &&
-            item.id_clarity === clarityvalue &&
-            item.id_carat === "17"
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "17"
           );
           const priceInHundreds = filtered[0].price * 100.00;
-          const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
           const diamondPrice = JSON.stringify(afterPurchaseDiscount);
           // setPriceAfterCalc(diamond)
           setData(diamondPrice * currencyPrice);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log("hello",currencyPrice);
+          console.log("hello", currencyPrice);
           // console.log("hello",currencyPrice);
           // console.log("hello",data);
 
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    } else if (text >= 10.00 && text <= 10.99) {
+
+      if (currencyvalue == "MYR") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.MYR);
           })
           .catch((error) => {
             console.error(error);
-            });
-          
-          } else if (text >= 10.00 && text <= 10.99) {
+          });
+      } else if (currencyvalue == "USD") {
+        setCurrencyPrice(1);
+      } else if (currencyvalue == "TWD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.TWD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "SGD") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.SGD);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (currencyvalue == "JPY") {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.JPY);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
 
-                if (currencyvalue == "MYR"){
-                  fetch('https://api.exchangerate.host/latest?base=USD&symbols=MYR', {
-                        method: "GET",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        }
-                      })
-                      .then(response => response.json())
-                      .then(responseJson => {
-                        setCurrencyPrice(responseJson.rates.MYR);
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                        });
-                } else if (currencyvalue == "USD") {
-                    setCurrencyPrice(1);
-                } else if (currencyvalue == "TWD") {
-                  fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
-                        method: "GET",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        }
-                      })
-                      .then(response => response.json())
-                      .then(responseJson => {
-                        setCurrencyPrice(responseJson.rates.TWD);
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                        });
-                } else if (currencyvalue == "SGD") {
-                  fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
-                        method: "GET",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        }
-                      })
-                      .then(response => response.json())
-                      .then(responseJson => {
-                        setCurrencyPrice(responseJson.rates.SGD);
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                        });
-                } else if (currencyvalue == "JPY") {
-                  fetch('https://api.exchangerate.host/latest?base=USD&symbols=JPY', {
-                        method: "GET",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        }
-                      })
-                      .then(response => response.json())
-                      .then(responseJson => {
-                        setCurrencyPrice(responseJson.rates.JPY);
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                        });
-                }
-          
-              fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-                method: "GET",
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                }
-              })
-              .then(response => response.json())
-              .then(responseJson => {
-              // console.log(responseJson.data);
-              const filtered = responseJson.data.filter(
-                (item) =>
-                item.id_shape === "1" &&
-                item.id_color === colorvalue &&
-                item.id_clarity === clarityvalue &&
-                item.id_carat === "18"
-              );
-              const priceInHundreds = filtered[0].price * 100.00;
-              const afterCutDiscount = priceInHundreds - (discountvalue/100 * priceInHundreds);
-              const afterPurchaseDiscount = afterCutDiscount - (purchasevalue/100 * afterCutDiscount);
-              const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-              // setPriceAfterCalc(diamond)
-              setData(diamondPrice * currencyPrice);
-              // setData(diamondPrice.replace(/\"/g, ""));
-              console.log("hello",currencyPrice);
-              // console.log("hello",currencyPrice);
-              // console.log("hello",data);
+      fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          // console.log(responseJson.data);
+          const filtered = responseJson.data.filter(
+            (item) =>
+              item.id_shape === "1" &&
+              item.id_color === colorvalue &&
+              item.id_clarity === clarityvalue &&
+              item.id_carat === "18"
+          );
+          const priceInHundreds = filtered[0].price * 100.00;
+          const afterCutDiscount = priceInHundreds - (discountvalue / 100 * priceInHundreds);
+          const afterPurchaseDiscount = afterCutDiscount - (purchasevalue / 100 * afterCutDiscount);
+          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
+          // setPriceAfterCalc(diamond)
+          setData(diamondPrice * currencyPrice);
+          // setData(diamondPrice.replace(/\"/g, ""));
+          console.log("hello", currencyPrice);
+          // console.log("hello",currencyPrice);
+          // console.log("hello",data);
 
-              })
-              .catch((error) => {
-                console.error(error);
-                });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
-          } 
-            // else {
-            
-            // }
-      
+    }
+    // else {
 
-      };
+    // }
+
+
+  };
 
 
   return (
@@ -2085,7 +2090,7 @@ export default function CalculatorScreen({ navigation }) {
               />
 
 
-              <Text style={{ color: '#fff', marginBottom: -10,  fontWeight: '600', fontSize: 15 }}>{t("Carat")}</Text>
+              <Text style={{ color: '#fff', marginBottom: -10, fontWeight: '600', fontSize: 15 }}>{t("Carat")}</Text>
               <TextInput //Carat
                 style={{
                   height: 50,
@@ -2199,7 +2204,7 @@ export default function CalculatorScreen({ navigation }) {
                 height: 150,
               }}
             />
-            <Text style={{ color: '#fff', textAlign: 'left', marginBottom: -10,  fontWeight: '600' }}>{t("PurchasePrice")}</Text>
+            <Text style={{ color: '#fff', textAlign: 'left', marginBottom: -10, fontWeight: '600' }}>{t("PurchasePrice")}</Text>
             <DropDownPicker //purchase price
               selectedValue={purchaseitems}
               defaultValue={'30% - Min Price'}
@@ -2250,7 +2255,7 @@ export default function CalculatorScreen({ navigation }) {
                     style={{ alignItems: 'center', }}
                     onPress={calcPrice}
                   >
-                  <Text style={{ color: '#fff', textAlign: 'center',  fontWeight: '600' }}>{t("Calculate")}</Text>
+                    <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>{t("Calculate")}</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={{
@@ -2267,7 +2272,7 @@ export default function CalculatorScreen({ navigation }) {
                     onPress={reset}
                   >
                     <Text
-                      style={{ color: '#fff',  fontWeight: '600' }}>
+                      style={{ color: '#fff', fontWeight: '600' }}>
                       {t("Reset")}
                     </Text>
                   </TouchableOpacity>
@@ -2305,17 +2310,17 @@ export default function CalculatorScreen({ navigation }) {
                   // zIndexInverse={1000}
                   // onValueChange={(value, index) => setValue(value)}
                   style={{
-                      borderColor: '#fff',
-                      height: 50,
-                      width: '100%',
-                      alignItems: 'center',
-                      marginVertical: 5,
+                    borderColor: '#fff',
+                    height: 50,
+                    width: '100%',
+                    alignItems: 'center',
+                    marginVertical: 5,
                   }}
                   dropDownContainerStyle={{
-                      borderColor: '#D3D3D3',
-                      height: 150,
+                    borderColor: '#D3D3D3',
+                    height: 150,
                   }}
-              />
+                />
               </View>
               <View style={{
                 width: '60%',
@@ -2389,7 +2394,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginTop: 10,
     marginBottom: 10,
-    
+
     fontWeight: '600'
   },
   scrollAreaTitle2: {
@@ -2398,7 +2403,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingVertical: 15,
     width: '40%',
-},
+  },
   priceListMain: {
     flexDirection: 'row',
     width: '90%',
