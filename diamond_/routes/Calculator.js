@@ -162,11 +162,11 @@ export default function CalculatorScreen({navigation}) {
 
   //Purchase Price
   const [purchaseOpen, setPurchaseOpen] = useState(false);
-  const [purchasevalue, setPurchaseValue] = useState('0');
+  const [purchasevalue, setPurchaseValue] = useState('1');
   const [purchaseitems, setPurchaseItems] = useState([
     {
       label: 'No Discount',
-      value: '0',
+      value: '1',
     },
     {
       label: '20%',
@@ -248,16 +248,8 @@ export default function CalculatorScreen({navigation}) {
   const [data, setData] = useState('');
   const [currencyPrice, setCurrencyPrice] = useState('');
   const [priceAfterCalc, setPriceAfterCalc] = useState('');
-  // const [caratData, setCaratData] = useState("")
+  const [currencySymbol, setCurrencySymbol] = useState("")
   const calcPrice = () => {
-    // { console.log('Color Calc', colorvalue) }
-    // { console.log('Clarity Calc', clarityvalue) }
-    // { console.log('Carat Calc', text) }
-    // { console.log('Cut Disc Calc', discountvalue) }
-    // { console.log('Purchase Price Calc', purchasevalue) }
-    // { console.log('Currency: ', currencyvalue) }
-    // const text = JSON.stringify(text);
-    // { console.log('Carat Calc', text) }
 
     if (text >= 0.01 && text <= 0.03) {
       if (currencyvalue == 'MYR') {
@@ -271,12 +263,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -288,6 +282,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -303,6 +298,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -318,6 +314,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -341,18 +355,16 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '1',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
           // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
         })
         .catch(error => {
           console.error(error);
@@ -369,12 +381,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -386,6 +400,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -401,6 +416,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -416,6 +432,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -439,18 +473,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '2',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -467,12 +498,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -484,6 +517,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -499,6 +533,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -514,6 +549,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -537,18 +590,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '3',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -565,12 +615,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -582,6 +634,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -597,6 +650,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -612,6 +666,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -635,18 +707,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '4',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -663,12 +732,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -680,6 +751,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -695,6 +767,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -710,6 +783,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -733,18 +824,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '5',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -761,12 +849,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -778,6 +868,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -793,6 +884,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -808,6 +900,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -831,18 +941,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '6',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -859,12 +966,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -876,6 +985,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -891,6 +1001,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -906,6 +1017,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -929,18 +1058,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '7',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -957,12 +1083,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -974,6 +1102,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -989,6 +1118,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1004,6 +1134,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1027,18 +1175,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '8',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1055,12 +1200,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1072,6 +1219,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1087,6 +1235,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1102,6 +1251,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1125,18 +1292,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '9',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1153,12 +1317,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1170,6 +1336,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1185,6 +1352,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1200,6 +1368,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1223,18 +1409,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '10',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1251,12 +1434,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1268,6 +1453,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1283,6 +1469,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1298,6 +1485,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1321,18 +1526,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '11',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1349,12 +1551,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1366,6 +1570,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1381,6 +1586,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1396,6 +1602,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1419,18 +1643,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '12',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1447,12 +1668,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1464,6 +1687,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1479,6 +1703,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1494,6 +1719,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1517,18 +1760,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '13',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1545,12 +1785,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1562,6 +1804,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1577,6 +1820,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1592,6 +1836,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1615,18 +1877,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '14',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1643,12 +1902,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1660,6 +1921,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1675,6 +1937,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1690,6 +1953,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1713,18 +1994,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '15',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1741,12 +2019,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1758,6 +2038,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1773,6 +2054,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1788,6 +2070,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1811,18 +2111,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '16',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1839,12 +2136,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1856,6 +2155,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1871,6 +2171,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1886,6 +2187,24 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
@@ -1909,18 +2228,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '17',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -1937,12 +2253,14 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.MYR);
+            setCurrencySymbol('RM');
           })
           .catch(error => {
             console.error(error);
           });
       } else if (currencyvalue == 'USD') {
         setCurrencyPrice(1);
+        setCurrencySymbol('$');
       } else if (currencyvalue == 'TWD') {
         fetch('https://api.exchangerate.host/latest?base=USD&symbols=TWD', {
           method: 'GET',
@@ -1954,6 +2272,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.TWD);
+            setCurrencySymbol('NT$');
           })
           .catch(error => {
             console.error(error);
@@ -1969,6 +2288,7 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.SGD);
+            setCurrencySymbol('S$');
           })
           .catch(error => {
             console.error(error);
@@ -1984,12 +2304,30 @@ export default function CalculatorScreen({navigation}) {
           .then(response => response.json())
           .then(responseJson => {
             setCurrencyPrice(responseJson.rates.JPY);
+            setCurrencySymbol('¥');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (currencyvalue == 'HKD') {
+        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            setCurrencyPrice(responseJson.rates.HKD);
+            setCurrencySymbol('HK$');
           })
           .catch(error => {
             console.error(error);
           });
       }
-
+      
       fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
         method: 'GET',
         headers: {
@@ -2007,18 +2345,15 @@ export default function CalculatorScreen({navigation}) {
               item.id_clarity === clarityvalue &&
               item.id_carat === '18',
           );
-          const priceInHundreds = filtered[0].price * 100.0;
-          const afterCutDiscount =
-            priceInHundreds - (discountvalue / 100) * priceInHundreds;
-          const afterPurchaseDiscount =
-            afterCutDiscount - (purchasevalue / 100) * afterCutDiscount;
-          const diamondPrice = JSON.stringify(afterPurchaseDiscount);
-          // setPriceAfterCalc(diamond)
-          setData(diamondPrice * currencyPrice);
-          // setData(diamondPrice.replace(/\"/g, ""));
-          console.log('hello', currencyPrice);
-          // console.log("hello",currencyPrice);
-          // console.log("hello",data);
+          const diamondPrice = filtered[0].price;
+          const caratValue = text * 100;
+          const pricePerCarat = diamondPrice * caratValue;
+          const priceAfterCutDiscount = pricePerCarat - (discountvalue / 100) * pricePerCarat;
+          const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
+          const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
+          const floatPrice = parseFloat(priceConvertCurrency);
+          const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(priceFixedTwoDP);
         })
         .catch(error => {
           console.error(error);
@@ -2368,7 +2703,7 @@ export default function CalculatorScreen({navigation}) {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.scrollAreaTitle2}>{data}</Text>
+                <Text style={styles.scrollAreaTitle2}>{currencySymbol}{' '}{data}</Text>
               </View>
               <View></View>
             </View>
