@@ -199,12 +199,12 @@ export default function CalculatorScreen({navigation}) {
   ]);
 
   const reset = () => {
-    setColorValue('E');
-    setClarityValue('FL');
+    setColorValue('1');
+    setClarityValue('1');
     setText(LOWER_LIMIT);
-    setShapeValue('Round');
-    setDiscountValue('30%');
-    setPurchaseValue('30% - Min price');
+    setShapeValue('1');
+    setDiscountValue('20');
+    setPurchaseValue('20');
     setPriceAfterCalc('');
     setData('');
   };
@@ -237,6 +237,11 @@ export default function CalculatorScreen({navigation}) {
       label: 'SGD',
       value: 'SGD',
       icon: () => <Image source={require('../assets/currency/sg.jpg')} />,
+    },
+    {
+      label: 'HKD',
+      value: 'HKD',
+      icon: () => <Image source={require('../assets/currency/hk.jpg')} />,
     },
   ]);
 
@@ -2023,6 +2028,8 @@ export default function CalculatorScreen({navigation}) {
 
     // }
   };
+
+  // }
 
   return (
     <SafeAreaView style={styles.main}>
