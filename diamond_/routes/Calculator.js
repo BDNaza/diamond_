@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Text,
   View,
@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 // import CurrencyDropdown from '../function/currencyDropdown';
 
@@ -17,8 +17,8 @@ const bgimg = {
   uri: 'https://www.crane-a.co.jp/en/wp-content/themes/lotus_tcd039a/img/diamondapp/mobile/main-bg.jpg',
 };
 
-export default function CalculatorScreen({navigation}) {
-  const {t, i18n} = useTranslation();
+export default function CalculatorScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
 
   const onColorOpen = useCallback(() => {
     setClarityOpen(false);
@@ -56,34 +56,34 @@ export default function CalculatorScreen({navigation}) {
   const [colorOpen, setColorOpen] = useState(false);
   const [colorvalue, setColorValue] = useState('1');
   const [coloritems, setColorItems] = useState([
-    {label: 'D', value: '1'},
-    {label: 'E', value: '2'},
-    {label: 'F', value: '3'},
-    {label: 'G', value: '4'},
-    {label: 'H', value: '5'},
-    {label: 'I', value: '6'},
-    {label: 'J', value: '7'},
-    {label: 'K', value: '8'},
-    {label: 'L', value: '9'},
-    {label: 'M', value: '10'},
-    {label: 'N', value: '11'},
+    { label: 'D', value: '1' },
+    { label: 'E', value: '2' },
+    { label: 'F', value: '3' },
+    { label: 'G', value: '4' },
+    { label: 'H', value: '5' },
+    { label: 'I', value: '6' },
+    { label: 'J', value: '7' },
+    { label: 'K', value: '8' },
+    { label: 'L', value: '9' },
+    { label: 'M', value: '10' },
+    { label: 'N', value: '11' },
   ]);
   // console.log(colorvalue + 'color');
   //clarity
   const [clarityOpen, setClarityOpen] = useState(false);
   const [clarityvalue, setClarityValue] = useState('1');
   const [clarityitems, setClarityItems] = useState([
-    {label: 'IF', value: '1'},
-    {label: 'VVS1', value: '2'},
-    {label: 'VVS2', value: '3'},
-    {label: 'VS1', value: '4'},
-    {label: 'VS2', value: '5'},
-    {label: 'SI1', value: '6'},
-    {label: 'SI2', value: '7'},
-    {label: 'SI3', value: '8'},
-    {label: 'I1', value: '9'},
-    {label: 'I2', value: '10'},
-    {label: 'I3', value: '11'},
+    { label: 'IF', value: '1' },
+    { label: 'VVS1', value: '2' },
+    { label: 'VVS2', value: '3' },
+    { label: 'VS1', value: '4' },
+    { label: 'VS2', value: '5' },
+    { label: 'SI1', value: '6' },
+    { label: 'SI2', value: '7' },
+    { label: 'SI3', value: '8' },
+    { label: 'I1', value: '9' },
+    { label: 'I2', value: '10' },
+    { label: 'I3', value: '11' },
   ]);
   // console.log(clarityvalue + 'clarity');
   //carat
@@ -162,11 +162,11 @@ export default function CalculatorScreen({navigation}) {
 
   //Purchase Price
   const [purchaseOpen, setPurchaseOpen] = useState(false);
-  const [purchasevalue, setPurchaseValue] = useState('1');
+  const [purchasevalue, setPurchaseValue] = useState('0');
   const [purchaseitems, setPurchaseItems] = useState([
     {
       label: 'No Discount',
-      value: '1',
+      value: '0',
     },
     {
       label: '20%',
@@ -206,6 +206,8 @@ export default function CalculatorScreen({navigation}) {
     setDiscountValue('20');
     setPurchaseValue('20');
     setPriceAfterCalc('');
+    setCurrencyValue('USD');
+    setCurrencySymbol('');
     setData('');
   };
 
@@ -288,7 +290,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -321,7 +323,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -365,6 +367,7 @@ export default function CalculatorScreen({navigation}) {
           const priceFixedTwoDP = floatPrice.toFixed(2);
           setData(priceFixedTwoDP);
           // setData(diamondPrice.replace(/\"/g, ""));
+          console.log(data)
         })
         .catch(error => {
           console.error(error);
@@ -406,7 +409,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -439,7 +442,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -523,7 +526,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -556,7 +559,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -640,7 +643,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -673,7 +676,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -757,7 +760,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -790,7 +793,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -833,6 +836,7 @@ export default function CalculatorScreen({navigation}) {
           const floatPrice = parseFloat(priceConvertCurrency);
           const priceFixedTwoDP = floatPrice.toFixed(2);
           setData(priceFixedTwoDP);
+
         })
         .catch(error => {
           console.error(error);
@@ -874,7 +878,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -907,7 +911,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -991,7 +995,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1024,7 +1028,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1108,7 +1112,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1141,7 +1145,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1225,7 +1229,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1258,7 +1262,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1342,7 +1346,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1375,7 +1379,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1459,7 +1463,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1492,7 +1496,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1576,7 +1580,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1609,7 +1613,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1693,7 +1697,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1726,7 +1730,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1810,7 +1814,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1843,7 +1847,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1927,7 +1931,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -1960,7 +1964,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2044,7 +2048,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2077,7 +2081,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2161,7 +2165,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2194,7 +2198,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2278,7 +2282,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       } else if (currencyvalue == 'SGD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=SGD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2311,7 +2315,7 @@ export default function CalculatorScreen({navigation}) {
           });
 
       } else if (currencyvalue == 'HKD') {
-        fetch('https://api.exchangerate.host/latest?base=USD&symbols=HKD', {
+        fetch('https://api.exchangerate.host/latest?base=USD', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -2327,7 +2331,7 @@ export default function CalculatorScreen({navigation}) {
             console.error(error);
           });
       }
-      
+
       fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
         method: 'GET',
         headers: {
@@ -2352,8 +2356,16 @@ export default function CalculatorScreen({navigation}) {
           const priceAfterPurchaseDiscount = priceAfterCutDiscount - (purchasevalue / 100) * priceAfterCutDiscount;
           const priceConvertCurrency = priceAfterPurchaseDiscount * currencyPrice;
           const floatPrice = parseFloat(priceConvertCurrency);
-          const priceFixedTwoDP = floatPrice.toFixed(2);
-          setData(priceFixedTwoDP);
+          // const priceFixedTwoDP = floatPrice.toFixed(2);
+          setData(floatPrice.toFixed(2));
+          // setData(priceFixedTwoDP);
+          console.log("filtered price: ", diamondPrice);
+          console.log('Carat selected: ', text);
+          console.log("carat value: ", caratValue);
+          console.log('final price: ', data);
+          console.log('currrency price: ', currencyPrice);
+          console.log('currrency symbol: ', currencySymbol);
+          console.log('currency value: ', currencyvalue);
         })
         .catch(error => {
           console.error(error);
@@ -2377,7 +2389,7 @@ export default function CalculatorScreen({navigation}) {
         </View>
         <View style={styles.body}>
           <View style={styles.scrollArea}>
-            <View style={{width: '50%', justifyContent: 'space-evenly'}}>
+            <View style={{ width: '50%', justifyContent: 'space-evenly' }}>
               <Text
                 style={{
                   color: '#fff',
@@ -2447,7 +2459,7 @@ export default function CalculatorScreen({navigation}) {
               />
             </View>
 
-            <View style={{width: '50%', justifyContent: 'space-evenly'}}>
+            <View style={{ width: '50%', justifyContent: 'space-evenly' }}>
               <Text
                 style={{
                   color: '#fff',
@@ -2526,6 +2538,7 @@ export default function CalculatorScreen({navigation}) {
               height: '40%',
               width: '90%',
               justifyContent: 'space-between',
+              // backgroundColor: 'green',
             }}>
             <Text
               style={{
@@ -2603,7 +2616,9 @@ export default function CalculatorScreen({navigation}) {
               }
             />
 
-            <View>
+            <View style={{
+              //  backgroundColor: 'red' 
+            }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -2612,6 +2627,7 @@ export default function CalculatorScreen({navigation}) {
                   justifyContent: 'space-between',
                   marginVertical: 10,
                   alignItems: 'center',
+                  // backgroundColor: 'blue',
                 }}>
                 <View
                   style={{
@@ -2622,7 +2638,7 @@ export default function CalculatorScreen({navigation}) {
                     borderRadius: 5,
                   }}>
                   <TouchableOpacity
-                    style={{alignItems: 'center'}}
+                    style={{ alignItems: 'center' }}
                     onPress={calcPrice}>
                     <Text
                       style={{
@@ -2645,9 +2661,9 @@ export default function CalculatorScreen({navigation}) {
                     backgroundColor: '#fffff00',
                   }}>
                   <TouchableOpacity
-                    style={{alignItems: 'center'}}
+                    style={{ alignItems: 'center' }}
                     onPress={reset}>
-                    <Text style={{color: '#fff', fontWeight: '600'}}>
+                    <Text style={{ color: '#fff', fontWeight: '600' }}>
                       {t('Reset')}
                     </Text>
                   </TouchableOpacity>
@@ -2656,43 +2672,42 @@ export default function CalculatorScreen({navigation}) {
             </View>
           </View>
 
-          <View style={{marginTop: '5%'}}>
+          <View style={{
+            marginVertical: '5%',
+            height: 150,
+            // backgroundColor: 'orange' 
+          }}>
             <Text style={styles.resultNote}>{t('Diamond_price')}</Text>
             <View style={styles.priceListMain}>
               <View
                 style={{
                   width: '38%',
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRightWidth: 1,
-                  borderRightColor: '#808080',
+                  height: 150,
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
                 }}>
-                {/* <CurrencyDropdown /> */}
                 <DropDownPicker
                   selectedValue={currencyitems}
-                  defaultValue={'MYR'}
+                  defaultValue={'USD'}
                   open={currencyOpen}
-                  // onOpen={onCurrencyOpen}
                   value={currencyvalue}
                   items={currencyitems}
                   setOpen={setCurrencyOpen}
                   setValue={setCurrencyValue}
                   setItems={setCurrencyItems}
-                  // zIndex={1000}
-                  // elevation={3}
-                  // zIndexInverse={1000}
-                  // onValueChange={(value, index) => setValue(value)}
+                  zIndex={1000}
+                  // dropDownDirection="BOTTOM"
                   style={{
                     borderColor: '#fff',
                     height: 50,
                     width: '100%',
                     alignItems: 'center',
-                    marginVertical: 5,
+                    borderBottomRightRadius: 0,
+                    borderTopRightRadius: 0,
                   }}
                   dropDownContainerStyle={{
                     borderColor: '#D3D3D3',
-                    height: 150,
+                    height: 100,
                   }}
                 />
               </View>
@@ -2700,12 +2715,18 @@ export default function CalculatorScreen({navigation}) {
                 style={{
                   width: '60%',
                   height: 50,
+                  borderRadius: 5,
                   justifyContent: 'center',
                   alignItems: 'center',
+                  backgroundColor: '#fff',
+                  borderLeftWidth: 1,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  borderLeftColor: '#808080',
                 }}>
-                <Text style={styles.scrollAreaTitle2}>{currencySymbol}{' '}{data}</Text>
+                <Text style={styles.scrollAreaTitle2}>{currencySymbol}{data}</Text>
               </View>
-              <View></View>
+
             </View>
           </View>
         </View>
@@ -2747,13 +2768,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    // backgroundColor: 'purple'
   },
   scrollArea: {
     height: '35%',
     flexDirection: 'row',
     justifyContent: 'center',
     width: '90%',
-    // backgroundColor:'blue'
+    // backgroundColor: 'yellow'
   },
   dropdownarea: {
     borderRadius: 10,
@@ -2774,14 +2796,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     paddingVertical: 15,
-    width: '40%',
+    width: '60%',
   },
   priceListMain: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     width: '90%',
-    height: 50,
-    backgroundColor: '#fff',
+    height: 150,
+    // backgroundColor: '#fff',
     borderRadius: 5,
     marginBottom: 10,
+    // backgroundColor: 'magenta'
   },
 });

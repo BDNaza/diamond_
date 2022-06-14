@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation }) {
     const color = stateSelectedPicker.selectedColorIndex
     const clarity = stateSelectedPicker.selectedClarityIndex
     const carat = stateSelectedPicker.selectedCaratIndex
-    
+
     const getPrice = () => {
 
         { console.log('zzzzz Home', color) }
@@ -45,39 +45,39 @@ export default function HomeScreen({ navigation }) {
         { console.log('Test Carat Home', carat) }
 
         fetch('https://www.jewel-cafe-staff.com/api/showPrice', {
-                method: "GET",
-                headers: {
+            method: "GET",
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                }
-            })
+            }
+        })
             .then(response => response.json())
             .then(responseJson => {
                 const filtered = responseJson.data.filter(
                     (item) =>
-                    item.id_shape === "1" &&
-                    item.id_color === JSON.stringify(color) &&
-                    item.id_clarity === JSON.stringify(clarity) &&
-                    item.id_carat === JSON.stringify(carat)
+                        item.id_shape === "1" &&
+                        item.id_color === JSON.stringify(color) &&
+                        item.id_clarity === JSON.stringify(clarity) &&
+                        item.id_carat === JSON.stringify(carat)
                 );
-            const diamondPrice = JSON.stringify(filtered[0].price)
+                const diamondPrice = JSON.stringify(filtered[0].price)
                 setData(diamondPrice.replace(/\"/g, ""));
                 console.log("Filtered Data Price: ", data);
             })
             .catch((error) => {
                 console.error(error);
-                });
+            });
 
-        };
+    };
 
-        const [data, setData] = useState("")
-        
-        // useEffect(() => {
-        
-        //    getPrice();
+    const [data, setData] = useState("")
 
-        // }, [getPrice]);
-        // }
+    // useEffect(() => {
+
+    //    getPrice();
+
+    // }, [getPrice]);
+    // }
 
     return (
         <SafeAreaView style={styles.main} >
@@ -123,7 +123,7 @@ export default function HomeScreen({ navigation }) {
                             onPress={getPrice}
                         >
                             <Text style={styles.buttonText}>{t("Calculate")}
-                        </Text>
+                            </Text>
                         </TouchableOpacity>
                         {/* <button onClick={getPrice}></button> */}
                     </View>
@@ -148,7 +148,7 @@ export default function HomeScreen({ navigation }) {
                             <Text style={styles.scrollAreaTitle2}>{"USD"}</Text>
                         </View>
                         <View style={{ width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
-                        <Text style={styles.scrollAreaTitle2}>{data}</Text>
+                            <Text style={styles.scrollAreaTitle2}>{data}</Text>
                         </View>
                         <View>
                         </View>
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     priceListMain: {
         flexDirection: 'row',
         width: '90%',
-        height: 70,
+        height: 50,
         backgroundColor: '#fff',
         borderRadius: 10,
         marginBottom: 10,

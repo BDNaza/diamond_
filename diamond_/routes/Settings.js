@@ -33,14 +33,15 @@ export default function SettingsScreen({ navigation }) {
                     <Text style={styles.headTitle}>{t("Settings")}</Text>
                 </View>
                 <View style={styles.body}>
-                    <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, }}>
+                    <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Price-update")}</Text>
-                        <View >
+                        <View style={{ zIndex: 0, elevation: 0, width: '40%', paddingRight: 0 }}>
+                            <Text style={{ color: '#fff', paddingHorizontal: 24, fontWeight: '600' }}>{t("Price-update-date")}</Text>
                         </View>
                     </View>
 
                     <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#fff', zIndex: 10, elevation: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={{ color: '#fff', paddingHorizontal: 20,  fontWeight: '600' }}>{t("Language")}</Text>
+                        <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Language")}</Text>
                         <View style={{ zIndex: 0, elevation: 0, width: '34%', paddingRight: 10 }}>
                             <DropDownPicker
                                 open={open}
@@ -73,7 +74,7 @@ export default function SettingsScreen({ navigation }) {
                         </View>
                     </View>
                     <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#fff', zIndex: 0, elevation: 0, }}>
-                        <Text style={{ color: '#fff', paddingHorizontal: 20,  fontWeight: '600' }}>{t("Share_App")}</Text>
+                        <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Share_App")}</Text>
                         <View></View>
                     </View>
                     <TouchableOpacity
@@ -82,7 +83,7 @@ export default function SettingsScreen({ navigation }) {
                             Linking.openURL('mailto:info@crane-a.co.jp?subject=Diamond Apps Inquiry&body=Inquiry details:')
                         }}>
                         <View style={{ width: '100%', height: 80, borderBottomWidth: 1, borderBottomColor: '#fff', zIndex: 0, elevation: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={{ color: '#fff', paddingHorizontal: 20,  fontWeight: '600' }}>{t("Contact_Author")}</Text>
+                            <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Contact_Author")}</Text>
                             <View style={{ alignItems: "center", width: '20%', paddingHorizontal: 20 }}>
                                 <Image style={{ width: 20, height: 20, resizeMode: 'contain', }} source={require('../assets/icons/arrowwhite.png')} />
                             </View>
@@ -93,7 +94,7 @@ export default function SettingsScreen({ navigation }) {
                         onPress={() => setModalVisible(true)}
                     >
                         <View style={{ width: '100%', height: 80, borderBottomWidth: 1, borderBottomColor: '#fff', zIndex: 0, elevation: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={{ color: '#fff', paddingHorizontal: 20,  fontWeight: '600' }}>{t("Terms_and_conditions")}</Text>
+                            <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Terms_and_conditions")}</Text>
                             <View style={{ alignItems: "center", width: '20%', paddingHorizontal: 20 }}>
                                 <Modal
                                     animationType="slide"
@@ -132,7 +133,7 @@ export default function SettingsScreen({ navigation }) {
                             style={{ alignItems: 'center', color: '#FFF' }}
                             onPress={reset}
                         >
-                            <Text style={{ color: '#fff',  fontWeight: '600' }}>
+                            <Text style={{ color: '#fff', fontWeight: '600' }}>
                                 {t("Reset")}
                             </Text>
                         </TouchableOpacity>
