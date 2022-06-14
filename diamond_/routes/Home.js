@@ -324,9 +324,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontSize: 15,
         paddingVertical: 15,
-        width: '20%',
+        width: '22%',
         fontFamily: 'Open Sans Light',
         // fontWeight:'600'
+        // backgroundColor: 'green',
     },
     scrollAreaTitle2: {
         color: '#000',
@@ -341,6 +342,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         // paddingVertical: 15,
         // width: '80%',
+
     },
     button: {
         width: '90%',

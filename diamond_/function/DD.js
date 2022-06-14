@@ -14,7 +14,7 @@ export default class Example extends React.Component {
     this.filterPrice = this.filterPrice.bind(this);
   }
 
-  
+
   filterPrice() {
     // const [data, setData] = useState([]);
 
@@ -50,7 +50,7 @@ export default class Example extends React.Component {
   render() {
     const windowWidth = Dimensions.get('window').width;
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10 }}>
         <View>
           <DynamicallySelectedPicker
             items={[
@@ -63,7 +63,7 @@ export default class Example extends React.Component {
               this.props.updateSelectedShape(index + 1);
               // console.log(index + 1 + 'shape')
             }}
-            height={230}
+            height={210}
             width={70}
             initialSelectedIndex={1}
             backgroundColor={'#fffff'}
@@ -125,8 +125,8 @@ export default class Example extends React.Component {
 
               // console.log(index + 1, 'Color')
             }}
-            height={230}
-            width={50}
+            height={210}
+            width={60}
             initialSelectedIndex={1}
             backgroundColor={'#fffff00'}
             selectedItemBorderColor={'#005fe9'}
@@ -186,7 +186,7 @@ export default class Example extends React.Component {
               this.props.updateSelectedClarity(index + 1);
               // console.log(index + 1 + 'Clarity')
             }}
-            height={230}
+            height={210}
             width={60}
             initialSelectedIndex={1}
             backgroundColor={'#fffff00'}
@@ -221,7 +221,7 @@ export default class Example extends React.Component {
               this.props.updateSelectedCarat(index + 1);
               // console.log(index + 1 + 'Carat')
             }}
-            height={230}
+            height={210}
             width={80}
             initialSelectedIndex={1}
             backgroundColor={'#fffff00'}
