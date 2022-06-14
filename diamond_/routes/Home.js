@@ -148,7 +148,7 @@ export default function HomeScreen({ navigation }) {
                             <Text style={styles.scrollAreaTitle2}>{"USD"}</Text>
                         </View>
                         <View style={{ width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
-                            <Text style={styles.scrollAreaTitle2}>{data}</Text>
+                            <Text style={styles.scrollAreaTitle2}>{'$'}{data}</Text>
                         </View>
                         <View>
                         </View>
