@@ -2417,7 +2417,7 @@ export default function CalculatorScreen({ navigation }) {
                   width: '95%',
                   textAlign: 'center',
                   alignItems: 'center',
-                  textAlign: 'center',
+                  // textAlign: 'center',
                   borderRadius: 5,
                 }}
                 dropDownContainerStyle={{
@@ -2425,6 +2425,9 @@ export default function CalculatorScreen({ navigation }) {
                   backgroundColor: '#D3D3D3',
                   height: 90,
                   width: '95%',
+                }}
+                labelStyle={{
+                  textAlign: 'center',
                 }}
               />
 
@@ -2447,6 +2450,7 @@ export default function CalculatorScreen({ navigation }) {
                   backgroundColor: '#fff',
                   borderColor: '#fff',
                   borderRadius: 5,
+                  textAlign: 'center'
                 }}
                 onChangeText={onChangeText}
                 value={text}
@@ -2456,6 +2460,7 @@ export default function CalculatorScreen({ navigation }) {
                 returnKeyType={'done'}
                 keyboardAppearance={'default'}
                 autoCorrect={true}
+
               />
             </View>
 
@@ -2494,6 +2499,9 @@ export default function CalculatorScreen({ navigation }) {
                   height: 90,
                   width: '95%',
                 }}
+                labelStyle={{
+                  textAlign: 'center',
+                }}
               />
 
               <Text
@@ -2527,6 +2535,9 @@ export default function CalculatorScreen({ navigation }) {
                   borderColor: '#D3D3D3',
                   backgroundColor: '#D3D3D3',
                   width: '95%',
+                }}
+                labelStyle={{
+                  textAlign: 'center',
                 }}
               />
             </View>
@@ -2568,11 +2579,15 @@ export default function CalculatorScreen({ navigation }) {
                 width: '100%',
                 alignItems: 'center',
                 marginVertical: 5,
+                textAlign: 'center',
               }}
               dropDownContainerStyle={{
                 borderColor: '#D3D3D3',
                 backgroundColor: '#D3D3D3',
                 height: 150,
+              }}
+              labelStyle={{
+                textAlign: 'center',
               }}
             />
             <Text
@@ -2611,7 +2626,7 @@ export default function CalculatorScreen({ navigation }) {
               }}
               labelStyle={
                 {
-                  // textAlign: 'center',
+                  textAlign: 'center',
                 }
               }
             />
@@ -2796,7 +2811,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     paddingVertical: 15,
-    width: '60%',
+    width: 200,
+    // backgroundColor: 'green'
   },
   priceListMain: {
     flexDirection: 'row',
