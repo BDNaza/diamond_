@@ -25,6 +25,7 @@ export default function CalculatorScreen({ navigation }) {
     setShapeOpen(false);
     setDiscountOpen(false);
     setPurchaseOpen(false);
+    setCurrencyOpen(false);
   }, []);
 
   const onClarityOpen = useCallback(() => {
@@ -32,23 +33,34 @@ export default function CalculatorScreen({ navigation }) {
     setShapeOpen(false);
     setDiscountOpen(false);
     setPurchaseOpen(false);
+    setCurrencyOpen(false);
   }, []);
   const onShapeOpen = useCallback(() => {
     setColorOpen(false);
     setClarityOpen(false);
     setDiscountOpen(false);
     setPurchaseOpen(false);
+    setCurrencyOpen(false);
   }, []);
   const onDiscountOpen = useCallback(() => {
     setColorOpen(false);
     setClarityOpen(false);
     setShapeOpen(false);
     setPurchaseOpen(false);
+    setCurrencyOpen(false);
   }, []);
   const onPurchaseOpen = useCallback(() => {
     setColorOpen(false);
     setClarityOpen(false);
     setShapeOpen(false);
+    setDiscountOpen(false);
+    setCurrencyOpen(false);
+  }, []);
+  const onCurrencyOpen = useCallback(() => {
+    setColorOpen(false);
+    setClarityOpen(false);
+    setShapeOpen(false);
+    setPurchaseOpen(false);
     setDiscountOpen(false);
   }, []);
 
@@ -204,7 +216,7 @@ export default function CalculatorScreen({ navigation }) {
     setText(LOWER_LIMIT);
     setShapeValue('1');
     setDiscountValue('20');
-    setPurchaseValue('20');
+    setPurchaseValue('0');
     setPriceAfterCalc('');
     setCurrencyValue('USD');
     setCurrencySymbol('');
@@ -2389,7 +2401,7 @@ export default function CalculatorScreen({ navigation }) {
         </View>
         <View style={styles.body}>
           <View style={styles.scrollArea}>
-            <View style={{ width: '50%', justifyContent: 'space-evenly' }}>
+            <View style={{ width: '50%', justifyContent: 'space-evenly', }}>
               <Text
                 style={{
                   color: '#fff',
@@ -2546,10 +2558,11 @@ export default function CalculatorScreen({ navigation }) {
           <View
             style={{
               flexDirection: 'column',
-              height: '40%',
+              // height: '40%',
+              height: 270,
               width: '90%',
               justifyContent: 'space-between',
-              // backgroundColor: 'green',
+              // backgroundColor: 'blue',
             }}>
             <Text
               style={{
@@ -2705,6 +2718,7 @@ export default function CalculatorScreen({ navigation }) {
                   selectedValue={currencyitems}
                   defaultValue={'USD'}
                   open={currencyOpen}
+                  onOpen={onCurrencyOpen}
                   value={currencyvalue}
                   items={currencyitems}
                   setOpen={setCurrencyOpen}
@@ -2722,7 +2736,7 @@ export default function CalculatorScreen({ navigation }) {
                   }}
                   dropDownContainerStyle={{
                     borderColor: '#D3D3D3',
-                    height: 100,
+                    height: 120,
                   }}
                 />
               </View>
@@ -2786,11 +2800,11 @@ const styles = StyleSheet.create({
     // backgroundColor: 'purple'
   },
   scrollArea: {
-    height: '35%',
+    // height: '35%',
+    height: 200,
     flexDirection: 'row',
     justifyContent: 'center',
     width: '90%',
-    // backgroundColor: 'yellow'
   },
   dropdownarea: {
     borderRadius: 10,
