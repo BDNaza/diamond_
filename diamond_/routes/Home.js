@@ -62,6 +62,7 @@ export default function HomeScreen({ navigation }) {
                 );
                 const diamondPrice = JSON.stringify(filtered[0].price)
                 setData(diamondPrice.replace(/\"/g, ""));
+                setSymbol('$')
                 console.log("Filtered Data Price: ", data);
             })
             .catch((error) => {
@@ -71,6 +72,7 @@ export default function HomeScreen({ navigation }) {
     };
 
     const [data, setData] = useState("")
+    const [symbol, setSymbol] = useState("")
 
     // useEffect(() => {
 
@@ -148,7 +150,7 @@ export default function HomeScreen({ navigation }) {
                             <Text style={styles.scrollAreaTitle2}>{"USD"}</Text>
                         </View>
                         <View style={{ width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', }}>
-                            <Text style={styles.scrollAreaTitle2}>{'$'}{data}</Text>
+                            <Text style={styles.scrollAreaTitle2}>{symbol}{data}</Text>
                         </View>
                         <View>
                         </View>
