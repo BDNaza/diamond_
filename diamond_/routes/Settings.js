@@ -30,13 +30,22 @@ export default function SettingsScreen({ navigation }) {
         <SafeAreaView style={styles.main} >
             <ImageBackground source={bgimg} resizeMode="cover" style={styles.background}>
                 <View style={styles.head}>
+                    <Image
+                        source={require('../assets/navIcon/DiamondIcon.png')}
+                        style={{
+                            width: 30,
+                            height: 30,
+                            marginLeft: 80,
+                            resizeMode: 'contain',
+                            tintColor: '#fff',
+                        }} />
                     <Text style={styles.headTitle}>{t("Settings")}</Text>
                 </View>
                 <View style={styles.body}>
-                    <View style={{ width: '100%', height: 80, justifyContent: 'center', borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View style={{ width: '100%', height: 80, justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#fff', zIndex: 0, elevation: 0, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', paddingHorizontal: 20, fontWeight: '600' }}>{t("Price-update")}</Text>
-                        <View style={{ zIndex: 0, elevation: 0, width: '40%', paddingRight: 0 }}>
-                            <Text style={{ color: '#fff', paddingHorizontal: 24, fontWeight: '600' }}>{t("Price-update-date")}</Text>
+                        <View style={{ zIndex: 0, elevation: 0, width: 150, paddingRight: 0, }}>
+                            <Text style={{ color: '#fff', paddingHorizontal: 10, fontWeight: '600' }}>{t("Price-update-date")}</Text>
                         </View>
                     </View>
 
@@ -130,7 +139,7 @@ export default function SettingsScreen({ navigation }) {
                     </Pressable>
                     <View style={styles.button}>
                         <TouchableOpacity
-                            style={{ alignItems: 'center', color: '#FFF' }}
+                            style={{ alignItems: 'center', color: '#FFF', height: '100%', justifyContent: 'center' }}
                             onPress={reset}
                         >
                             <Text style={{ color: '#fff', fontWeight: '600' }}>
@@ -173,7 +182,7 @@ const styles = StyleSheet.create({
     headTitle: {
         color: '#fff',
         textAlign: 'left',
-        paddingLeft: 20,
+        paddingLeft: 5,
         fontSize: 30,
         width: '100%',
     },

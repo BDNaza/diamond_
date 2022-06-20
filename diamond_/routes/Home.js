@@ -121,7 +121,7 @@ export default function HomeScreen({ navigation }) {
                     </View>
                     <View style={styles.button}>
                         <TouchableOpacity
-                            style={{ alignItems: 'center', color: '#FFF' }}
+                            style={{ alignItems: 'center', color: '#FFF', height: '100%', justifyContent: 'center' }}
                             onPress={getPrice}
                         >
                             <Text style={styles.buttonText}>{t("Calculate")}
