@@ -287,7 +287,6 @@ export default function CalculatorScreen({ navigation }) {
   useEffect(() => {
     async function getCurrency() {
       const data = await currencyAPI();
-      console.log("Hello",data.rates[0].HKD);
       setListCurrency({
         'MYR': data.rates[0].MYR,
         'JPY': data.rates[0].JPY,
