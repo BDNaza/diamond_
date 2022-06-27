@@ -274,7 +274,7 @@ export default function CalculatorScreen({ navigation }) {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     };
-    const url = `https://api.exchangerate.host/latest?base=USD`;
+    const url = `https://jewel-cafe-staff.com/api/latestRates`;
     try {
       const response = await fetch(url, options);
       const data = await response.json();
@@ -287,13 +287,14 @@ export default function CalculatorScreen({ navigation }) {
   useEffect(() => {
     async function getCurrency() {
       const data = await currencyAPI();
+      console.log("Hello",data.rates[0].HKD);
       setListCurrency({
-        'MYR': data.rates.MYR,
-        'JPY': data.rates.JPY,
-        'TWD': data.rates.TWD,
-        'SGD': data.rates.SGD,
-        'HKD': data.rates.HKD,
-        'USD': data.rates.USD,
+        'MYR': data.rates[0].MYR,
+        'JPY': data.rates[0].JPY,
+        'TWD': data.rates[0].TWD,
+        'SGD': data.rates[0].SGD,
+        'HKD': data.rates[0].HKD,
+        'USD': data.rates[0].USD,
       });
     }
     getCurrency();
